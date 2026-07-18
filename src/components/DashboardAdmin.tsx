@@ -52,10 +52,10 @@ export default function DashboardAdmin({
     }
 
     // Pengecekan aman menggunakan optional chaining (?.) agar tidak crash
-    const exists = users && Array.isArray(users) && users.some(u => u?.username?.toLowerCase() === newUsername.toLowerCase().trim());
-    if (exists) {
-      setFormError(`Username "${newUsername}" sudah terdaftar dalam database.`);
-      return;
+    const exists = users && Array.isArray(users) && users.some(u => {
+  if (!u || !u.username) return false; // Abaikan jika ada data user yang rusak/kosong di database
+  return u.username.toLowerCase() === newUsername.toLowerCase().trim();
+});
     }
 
     const newUser: UserAccount = {
