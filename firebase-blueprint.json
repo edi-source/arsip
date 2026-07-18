@@ -1,0 +1,59 @@
+{
+  "collections": {
+    "users": {
+      "description": "Daftar akun pengguna sistem kearsipan SMPN 1 Padang Panjang",
+      "schema": {
+        "id": "string (usr-admin, usr-kepsek, etc.)",
+        "username": "string",
+        "name": "string",
+        "role": "string (admin, kepsek, tu, guru)",
+        "nip": "string (optional)",
+        "active": "boolean"
+      }
+    },
+    "surat_masuk": {
+      "description": "Catatan arsip surat masuk",
+      "schema": {
+        "id": "string",
+        "nomorSurat": "string",
+        "asalSurat": "string",
+        "tanggalSurat": "string (YYYY-MM-DD)",
+        "tanggalDiterima": "string (YYYY-MM-DD)",
+        "perihal": "string",
+        "ringkasan": "string",
+        "kategori": "string",
+        "fileName": "string (optional)",
+        "disposisi": "array of Disposisi objects"
+      }
+    },
+    "surat_keluar": {
+      "description": "Catatan arsip surat keluar dan draf",
+      "schema": {
+        "id": "string",
+        "nomorSurat": "string",
+        "tujuanSurat": "string",
+        "tanggalSurat": "string (YYYY-MM-DD)",
+        "perihal": "string",
+        "isiSurat": "string",
+        "kategori": "string",
+        "status": "string (Draft, Review, Ttd, Kirim)",
+        "pembuat": "string",
+        "ttdKepsek": "string (optional)",
+        "ttdTanggal": "string (optional)",
+        "catatanRevisi": "string (optional)"
+      }
+    },
+    "audit_logs": {
+      "description": "Log aktivitas sistem kearsipan digital",
+      "schema": {
+        "id": "string",
+        "timestamp": "string (ISO date)",
+        "userId": "string",
+        "userNama": "string",
+        "role": "string",
+        "aktivitas": "string",
+        "tipe": "string (success, info, warning, error)"
+      }
+    }
+  }
+}

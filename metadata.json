@@ -1,0 +1,6 @@
+{
+  "name": "Arsip Surat Digital SMPN 1 Padang Panjang",
+  "description": "Sistem kearsipan surat masuk/keluar, disposisi dinas digital, tanda tangan elektronik resmi, dan cetak laporan kop surat untuk SMP Negeri 1 Padang Panjang.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

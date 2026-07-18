@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  
+  --animate-spin-slow: spin 12s linear infinite;
+  --animate-shake: shake 0.4s ease-in-out;
+  --animate-fade-in: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  
+  /* Redefine amber to elegant royal blue palette */
+  --color-amber-50: #eff6ff;
+  --color-amber-100: #dbeafe;
+  --color-amber-200: #bfdbfe;
+  --color-amber-300: #93c5fd;
+  --color-amber-400: #60a5fa;
+  --color-amber-500: #3b82f6;
+  --color-amber-600: #2563eb;
+  --color-amber-700: #1d4ed8;
+  --color-amber-800: #1e40af;
+  --color-amber-900: #1e3a8a;
+  --color-amber-950: #172554;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-shake {
+  animation: var(--animate-shake);
+}
+
+.animate-fade-in {
+  animation: var(--animate-fade-in);
+}
+
+/* ==========================================
+   SOPHISTICATED LIGHT INTEGRATION THEME RULES
+   ========================================== */
+
+body {
+  background-color: #f8fafc !important; /* Elegant light slate */
+  color: #0f172a !important; /* Dark Slate-900 high contrast text */
+}
+
+/* Global container and card light mappings */
+.bg-slate-50 {
+  background-color: #f1f5f9 !important; /* Light slate base background */
+}
+
+.bg-white {
+  background-color: #ffffff !important; /* Pure clean white container */
+  color: #1e293b !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Elegant blue areas like sidebar panels and headers */
+.bg-slate-900 {
+  background-color: #1e3a8a !important; /* Elegant dark blue brand background */
+}
+
+.bg-slate-100 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Hover highlights for cards and list rows */
+.hover\:bg-slate-50\/60:hover, 
+.hover\:bg-slate-50:hover,
+.hover\:bg-slate-50\/50:hover {
+  background-color: #f1f5f9 !important; /* Light Slate hover */
+}
+
+/* Text elements contrast adjustments */
+.text-slate-950, .text-slate-900 {
+  color: #0f172a !important; /* Dark Slate-900 text */
+}
+
+.text-slate-800 {
+  color: #1e293b !important; /* Slate-800 */
+}
+
+.text-slate-700 {
+  color: #334155 !important; /* Slate-700 */
+}
+
+.text-slate-600 {
+  color: #475569 !important; /* Slate-600 */
+}
+
+.text-slate-500 {
+  color: #64748b !important; /* Slate-500 */
+}
+
+.text-slate-400 {
+  color: #94a3b8 !important; /* Slate-400 */
+}
+
+/* Form Fields and Interactive Controls */
+input, select, textarea {
+  background-color: #ffffff !important; /* Pure white input */
+  border-color: #cbd5e1 !important; /* Slate-300 border */
+  color: #0f172a !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #2563eb !important; /* Elegant Royal Blue Focus */
+  box-shadow: 0 0 0 1px #2563eb !important;
+  outline: none;
+}
+
+/* Borders and rule dividers */
+.border, .border-2, .border-t, .border-b, .border-l, .border-r,
+.border-slate-100, .border-slate-200, .border-slate-300 {
+  border-color: #e2e8f0 !important; /* Light slate border */
+}
+
+.divide-slate-100 > * + *, .divide-slate-200 > * + * {
+  border-color: #e2e8f0 !important;
+}
+
+/* Elegant blue accents from Design HTML */
+.border-b-4.border-amber-500, 
+.border-b-2.border-amber-600 {
+  border-bottom: 4px solid #2563eb !important;
+}
+
+.text-amber-500, .text-amber-600 {
+  color: #2563eb !important; /* Elegant Blue */
+}
+
+.bg-amber-500 {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+.bg-amber-500\/10, .bg-amber-50\/20, .bg-amber-50\/10 {
+  background-color: rgba(37, 99, 235, 0.08) !important;
+  border-color: rgba(37, 99, 235, 0.2) !important;
+}
+
+/* Emerald green state highlights */
+.bg-emerald-50\/20, .bg-emerald-50\/10, .bg-emerald-100 {
+  background-color: rgba(16, 185, 129, 0.08) !important;
+  color: #059669 !important;
+  border-color: rgba(16, 185, 129, 0.2) !important;
+}
+
+.text-emerald-700, .text-emerald-950, .text-emerald-800 {
+  color: #047857 !important;
+}
+
+/* Red / warnings glass styling */
+.bg-red-50\/20, .bg-red-50\/10, .bg-red-100 {
+  background-color: rgba(239, 68, 68, 0.08) !important;
+  color: #dc2626 !important;
+  border-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+.text-red-600, .text-red-950, .text-red-800 {
+  color: #b91c1c !important;
+}
+
+/* Keep Printable paper document authentic black-on-white */
+#print-modal-overlay .bg-white,
+.bg-white.text-black.font-serif,
+.bg-white.text-black.font-serif * {
+  background-color: #ffffff !important;
+  color: #0f172a !important; /* Deep black ink */
+  border-color: #334155 !important;
+}
+
+#print-modal-overlay .bg-white .border-black,
+.bg-white.text-black.font-serif .border-black {
+  border-color: #000000 !important;
+}
+
+/* Stempel stamp visualization on white sheets */
+.bg-white.text-black.font-serif .text-amber-600,
+.bg-white.text-black.font-serif .text-amber-500 {
+  color: #1d4ed8 !important; /* Elegant dark blue ink */
+}
+
+/* Signature Drawing Area */
+#signature-pad {
+  background-color: #f8fafc !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+/* Canvas guide line box needs a clear text */
+#signature-canvas-container .bg-white {
+  background-color: #ffffff !important;
+}
+
+/* Footer layout border styling */
+footer.bg-white {
+  background-color: #ffffff !important;
+  border-top: 1px solid #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+/* Printing styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .print\:hidden {
+    display: none !important;
+  }
+  #print-modal-overlay {
+    position: static !important;
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  .print\:border-black {
+    border-color: black !important;
+  }
+}
