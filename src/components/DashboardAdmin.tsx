@@ -9,13 +9,11 @@ import {
   Users, 
   History, 
   UserPlus, 
-  ShieldAlert, 
   ShieldCheck, 
   ToggleLeft, 
   ToggleRight, 
   Clock, 
-  AlertCircle,
-  Activity
+  AlertCircle
 } from 'lucide-react';
 
 interface DashboardAdminProps {
@@ -53,8 +51,8 @@ export default function DashboardAdmin({
       return;
     }
 
-    // PERBAIKAN: Menambahkan pengaman '?.' agar tidak crash jika ada username kosong di database
-    const exists = users && Array.isArray(users) && users.some(u => u?.username?.toLowerCase() === newUsername.toLowerCase());
+    // Pengecekan aman menggunakan optional chaining (?.) agar tidak crash
+    const exists = users && Array.isArray(users) && users.some(u => u?.username?.toLowerCase() === newUsername.toLowerCase().trim());
     if (exists) {
       setFormError(`Username "${newUsername}" sudah terdaftar dalam database.`);
       return;
@@ -103,7 +101,6 @@ export default function DashboardAdmin({
     );
   };
 
-  // Helper for audit badges
   const getLogBadge = (tipe: AuditLog['tipe']) => {
     switch (tipe) {
       case 'success':
@@ -228,9 +225,9 @@ export default function DashboardAdmin({
               <div className="sm:col-span-2 pt-2">
                 <button
                   type="submit"
-                  className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2 rounded text-xs transition duration-150 uppercase tracking-wider"
+                  className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2 rounded text-xs transition duration-150 uppercase tracking-wider cursor-pointer"
                 >
-                  Daftarkan Akun
+                  Daftarkan Akun Baru
                 </button>
               </div>
             </form>
@@ -257,3 +254,5 @@ export default function DashboardAdmin({
                     <tr key={u.id} className="hover:bg-slate-50">
                       <td className="py-2.5 pr-2">
                         <div className="font-bold text-slate-900">{u.name}</div>
+                        <div className="text-[10px] text-slate-400 font-mono">{u.nip || 'Tidak ada NIP'}</div>
+                      </td>
