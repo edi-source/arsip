@@ -4,7 +4,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig } from 'vite';
 
-// Amankan __dirname untuk ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -17,15 +16,19 @@ export default defineConfig(() => {
       },
     },
     server: {
-      // Mengizinkan semua koneksi luar (Termasuk dari URL Ngrok)
-      allowedHosts: true, 
-      host: '0.0.0.0', // Membuka port agar bisa di-forward oleh ngrok
+      host: '0.0.0.0', 
+      port: 3000, // Memastikan port terkunci di 3000 sesuai package.json Anda
+      allowedHosts: true, // Izinkan host Ngrok
+      cors: true, // Izinkan akses lintas asal dari Ngrok [4, 5]
       
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      hmr: process.env.DISABLE_HMR !== 'true',
+      // Mengamankan koneksi Hot Module Replacement (HMR) lewat Ngrok
+      hmr: {
+        host: 'localhost',
+        protocol: 'ws',
+        port: 3000,
+      },
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
-    // Tetap menggunakan sub-folder '/arsip/' hanya saat build production untuk GitHub Pages
     base: process.env.NODE_ENV === 'production' ? '/arsip/' : '/',
   };
 });
