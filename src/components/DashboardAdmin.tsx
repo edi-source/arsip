@@ -53,8 +53,8 @@ export default function DashboardAdmin({
       return;
     }
 
-    // Check if username already exists
-    const exists = users.some(u => u.username.toLowerCase() === newUsername.toLowerCase());
+    // PERBAIKAN: Menambahkan pengaman '?.' agar tidak crash jika ada username kosong di database
+    const exists = users && Array.isArray(users) && users.some(u => u?.username?.toLowerCase() === newUsername.toLowerCase());
     if (exists) {
       setFormError(`Username "${newUsername}" sudah terdaftar dalam database.`);
       return;
@@ -62,8 +62,8 @@ export default function DashboardAdmin({
 
     const newUser: UserAccount = {
       id: 'usr-' + Date.now(),
-      username: newUsername.toLowerCase(),
-      name: newName,
+      username: newUsername.toLowerCase().trim(),
+      name: newName.trim(),
       role: newRole,
       nip: newNip || undefined,
       active: true,
@@ -225,137 +225,35 @@ export default function DashboardAdmin({
                 />
               </div>
 
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-2 pt-2">
                 <button
-                  id="btn-reg-submit"
                   type="submit"
-                  className="w-full bg-slate-900 hover:bg-slate-950 text-white font-bold text-xs py-2 rounded shadow-sm transition-all cursor-pointer"
+                  className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2 rounded text-xs transition duration-150 uppercase tracking-wider"
                 >
-                  Daftarkan Akun & atur Sandi
+                  Daftarkan Akun
                 </button>
               </div>
             </form>
           </div>
 
-          {/* User accounts list */}
+          {/* User List Table */}
           <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
             <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2 border-b border-slate-100 pb-2">
-              <Users className="w-4 h-4 text-amber-600" />
-              Daftar Pengguna Terdaftar ({users.length})
+              <Users className="w-4 h-4 text-blue-600" />
+              Daftar Akun Terdaftar ({users?.length || 0})
             </h3>
-
             <div className="overflow-x-auto">
-              <table className="w-full text-xs text-left text-slate-600">
-                <thead className="text-[10px] uppercase font-bold text-slate-400 bg-slate-50/80">
-                  <tr>
-                    <th className="px-3 py-2">Akun & NIP</th>
-                    <th className="px-3 py-2">Peran</th>
-                    <th className="px-3 py-2">Username</th>
-                    <th className="px-3 py-2 text-center">Status</th>
+              <table className="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr className="border-b border-slate-200 text-slate-400 font-bold uppercase tracking-wider">
+                    <th className="pb-2">Nama / NIP</th>
+                    <th className="pb-2">Username</th>
+                    <th className="pb-2">Role</th>
+                    <th className="pb-2 text-center">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {users.map((user) => (
-                    <tr key={user.id} className="hover:bg-slate-55/40">
-                      <td className="px-3 py-2.5">
-                        <p className="font-bold text-slate-900">{user.name}</p>
-                        {user.nip && <p className="text-[9px] text-slate-500 font-mono mt-0.5">NIP: {user.nip}</p>}
-                      </td>
-                      <td className="px-3 py-2.5">
-                        <span className={`px-2 py-0.5 rounded text-[9px] font-bold font-mono ${
-                          user.role === 'admin' 
-                            ? 'bg-purple-100 text-purple-950 border border-purple-200' 
-                            : user.role === 'kepsek'
-                              ? 'bg-amber-100 text-amber-950 border border-amber-200'
-                              : user.role === 'tu'
-                                ? 'bg-blue-100 text-blue-950 border border-blue-200'
-                                : 'bg-slate-100 text-slate-700'
-                        }`}>
-                          {user.role.toUpperCase()}
-                        </span>
-                      </td>
-                      <td className="px-3 py-2.5 font-mono text-slate-700">
-                        {user.username}
-                      </td>
-                      <td className="px-3 py-2.5 text-center">
-                        <button
-                          id={`btn-toggle-active-${user.id}`}
-                          onClick={() => handleToggleActive(user.id, user.name, user.active)}
-                          disabled={user.id === currentUser.id}
-                          className="focus:outline-none transition-all disabled:opacity-30 cursor-pointer inline-flex"
-                          title={user.active ? 'Klik untuk Menonaktifkan' : 'Klik untuk Mengaktifkan'}
-                        >
-                          {user.active ? (
-                            <span className="flex items-center gap-1 text-[10px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded-full">
-                              Aktif
-                            </span>
-                          ) : (
-                            <span className="flex items-center gap-1 text-[10px] text-red-700 font-bold bg-red-50 border border-red-300 px-2 py-0.5 rounded-full">
-                              Nonaktif
-                            </span>
-                          )}
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Real-time System Audit Logs */}
-        <div className="lg:col-span-5 bg-slate-950 border border-slate-800 rounded-xl p-5 shadow-2xl space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-            <h3 className="font-bold text-white text-sm flex items-center gap-2">
-              <History className="w-4 h-4 text-amber-500 animate-spin-slow" />
-              Lintasan Audit Log Real-Time
-            </h3>
-            <span className="text-[10px] bg-slate-900 border border-slate-700 text-slate-400 px-2 py-0.5 rounded font-mono font-bold">
-              SYS-AUDIT
-            </span>
-          </div>
-
-          {/* Log Stream list */}
-          <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
-            {auditLogs.length === 0 ? (
-              <p className="text-xs text-slate-500 italic text-center py-10">Belum ada rekam log aktivitas sistem.</p>
-            ) : (
-              auditLogs.map((log) => (
-                <div
-                  id={`log-item-${log.id}`}
-                  key={log.id}
-                  className="p-3 bg-slate-900/60 border border-slate-900 hover:border-slate-800 rounded text-[11px] leading-relaxed transition-all space-y-1.5"
-                >
-                  <div className="flex items-center justify-between gap-1 flex-wrap">
-                    <div className="flex items-center gap-1">
-                      <span className="text-[9px] text-slate-400 font-bold">{log.userNama}</span>
-                      <span className="text-[8px] bg-slate-800 border border-slate-700 text-slate-300 px-1 py-0.2 rounded font-mono uppercase">
-                        {log.role}
-                      </span>
-                    </div>
-                    <span className={`text-[8px] font-mono px-1.5 py-0.2 border rounded uppercase ${getLogBadge(log.tipe)}`}>
-                      {log.tipe}
-                    </span>
-                  </div>
-
-                  <p className="text-slate-300">
-                    {log.aktivitas}
-                  </p>
-
-                  <div className="text-[9px] text-slate-500 font-mono flex items-center gap-1 pt-1 border-t border-slate-900">
-                    <Clock className="w-3 h-3" />
-                    <span>{new Date(log.timestamp).toLocaleString()}</span>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  );
-}
+                <tbody className="divide-y divide-slate-100 text-slate-700">
+                  {users?.map((u) => (
+                    <tr key={u.id} className="hover:bg-slate-50">
+                      <td className="py-2.5 pr-2">
+                        <div className="font-bold text-slate-900">{u.name}</div>
